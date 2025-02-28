@@ -1,0 +1,44 @@
+import unittest
+from unittest.mock import patch
+
+from tienda import product, get_product, show_sumary
+
+class test_inventary_system(unittest.TestCase):
+    
+    def test_product_creation(self):
+        product = product ("pan", 2000, 10)
+
+        self.assertEqual(product.name, "pan")
+        self.assertEqual(product.price_per_unit, 2000)
+        self.assertEqual(product.amount, 10)
+
+    def test_get_product(self, mock_input):
+        product = get_product(1)
+
+
+        self.assertEqual(product.name, "pan")
+        self.assertEqual(product.price_per_unit, 1500.00)
+        self.assertEqual(product.amount, 10)
+
+    def test_show_sumary(self):
+        products = [
+            product("pan", 1500.00, 10),
+            product("queso", 25.00, 50),
+            product("arroz", 40.00, 30)
+]
+        
+    with patch('builtins.print') as mock_print:
+            show_sumary(product)
+            # Verificar que print haya sido llamado correctamente
+            mock_print.assert_any_call("- pan     - 2000      - 10        cop -")
+            mock_print.assert_any_call("- queso      - 6000        - 3        cop -")
+            mock_print.assert_any_call("- arroz    - 50000        - 7        cop -")
+
+if __name__ == '__main__':
+    unittest.main()
+
+
+
+
+
+

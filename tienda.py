@@ -20,18 +20,18 @@ class product:
         self.amount = amount
         
     def __str__(self):
-        return f"- {self.name:<10} - {self.price_per_unit:<12} - {self.amount:<10} pesos -"
+        return f"- {self.name:<10} - {self.price_per_unit:<12} - {self.amount:<10} cop -"
 
 def get_product(num_product):
     name = input(f'product {num_product}, what is the product name')
     price_per_unit = float(input(f'which is the product price of {name}?'))
     amount = int(input(f'how much {name} do we have?'))
     
-    return product(name, price_per_unit, amount)
+    return product(name, amount, price_per_unit)
 
 def show_sumary(products):
     print("\nSumary:")
-    print("product - price_per_unit - amount")
+    print("product - amount - price_per_unit")
     for product in products:
         print(product)
 
