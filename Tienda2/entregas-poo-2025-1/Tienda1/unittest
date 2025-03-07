@@ -1,0 +1,38 @@
+import unittest
+from unittest.mock import patch
+from tienda import Product, get_product, show_summary  
+
+class TestInventorySystem(unittest.TestCase):
+    
+    def test_product_creation(self):
+        prod = Product("pan", 2000, 10)
+
+        self.assertEqual(prod.name, "pan")
+        self.assertEqual(prod.price_per_unit, 2000)
+        self.assertEqual(prod.amount, 10)
+
+    @patch('builtins.input', side_effect=["pan", "1500", "10"])  # this get us the entrance
+    def test_get_product(self, mock_input):
+        prod = get_product(1)
+
+        self.assertEqual(prod.name, "pan")
+        self.assertEqual(prod.price_per_unit, 1500.00)
+        self.assertEqual(prod.amount, 10)
+
+    @patch('builtins.print')
+    def test_show_summary(self, mock_print):
+        products = [
+            Product("pan", 2000.00, 10),
+            Product("queso", 1500.00, 3),
+            Product("arroz", 5000.00, 7)
+        ]
+        
+        show_summary(products)
+
+        # This help us to verify that the print has the correct values
+        mock_print.assert_any_call("- pan     - 2000.0    - 10        cop")
+        mock_print.assert_any_call("- queso   - 1500.0    - 3         cop")
+        mock_print.assert_any_call("- arroz   - 5000.0    - 7         cop")
+
+if __name__ == '__main__':
+    unittest.main()
